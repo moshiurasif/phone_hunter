@@ -34,10 +34,9 @@ const displayData = (data, dataLimit) => {
               <p class="card-text">
                 ${datum.slug}
               </p>
+              <button onclick="phoneDetails('${datum.slug}')" id="phone-details" class="btn btn-secondary">Phone Details</button>
             </div>
-            <div class="card-footer">
-              <small class="text-muted">Buy Now</small>
-            </div>
+            
           </div>
         `;
         cardContainer.appendChild(colDiv);
@@ -56,6 +55,13 @@ const processData = dataLimit => {
 document.getElementById("search-btn").addEventListener("click", ()=>{
     processData(10);
 })
+document.getElementById("search-text").addEventListener("keypress", (e)=>{
+// console.log(e.key);
+if (e.key === "Enter") {
+    processData(10);
+    
+}
+})
 
 const loadSpinner = isLoading =>{
     const loader = document.getElementById("loader");
@@ -68,3 +74,10 @@ const loadSpinner = isLoading =>{
 document.getElementById("btn-show-all").addEventListener("click", ()=>{
     processData();
 })
+
+const phoneDetails = async id =>{
+const url = `https://openapi.programming-hero.com/api/phone/${id}`;
+const res = await fetch(url);
+const data = await res.json();
+console.log(data.data);
+}
