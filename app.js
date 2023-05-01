@@ -36,11 +36,24 @@ const displayData = (data) => {
         `;
         cardContainer.appendChild(colDiv);
     })
-console.log(data);
+// console.log(data);
+// stop loader
+loadSpinner(false);
 }
 
 document.getElementById("search-btn").addEventListener("click", ()=>{
+    // start loader
+    loadSpinner(true);
     const searchInput = document.getElementById("search-text");
     const searchText = searchInput.value;
     loadPhoneData(searchText);
 })
+
+const loadSpinner = isLoading =>{
+    const loader = document.getElementById("loader");
+    if (isLoading) {
+        loader.classList.remove("d-none");
+    } else {
+        loader.classList.add("d-none");
+    }
+}
