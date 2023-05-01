@@ -4,12 +4,18 @@ const loadPhoneData = async(searchText) =>{
     const data = await res.json();
     displayData(data.data);
 }
-loadPhoneData();
+// loadPhoneData();
 
 const displayData = (data) => {
     const cardContainer = document.getElementById("card-container");
     cardContainer.innerText = "";
-    
+    data = data.slice(0, 9);
+    const noFound = document.getElementById("no-found");
+    if (data.length === 0) {
+        noFound.classList.remove("d-none");
+    }else{
+        noFound.classList.add("d-none");
+    }
     data.forEach(datum => {
         const colDiv = document.createElement("div");
         colDiv.classList.add("col");
