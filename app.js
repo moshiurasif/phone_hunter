@@ -4,8 +4,8 @@ const loadPhoneData = async(searchText, dataLimit) =>{
     const data = await res.json();
     displayData(data.data, dataLimit);
 }
-// loadPhoneData();
 
+loadPhoneData("apple");
 const displayData = (data, dataLimit) => {
     const cardContainer = document.getElementById("card-container");
     cardContainer.innerText = "";
@@ -34,7 +34,9 @@ const displayData = (data, dataLimit) => {
               <p class="card-text">
                 ${datum.slug}
               </p>
-              <button onclick="phoneDetails('${datum.slug}')" id="phone-details" class="btn btn-secondary">Phone Details</button>
+              <button onclick="phoneDetails('${datum.slug}')" id="phone-details" class="btn btn-secondary" data-bs-toggle="modal"
+              data-bs-target="#phoneDetailsModal">Phone Details</button>
+         
             </div>
             
           </div>
@@ -79,5 +81,20 @@ const phoneDetails = async id =>{
 const url = `https://openapi.programming-hero.com/api/phone/${id}`;
 const res = await fetch(url);
 const data = await res.json();
-console.log(data.data);
+displayPhoneDetails(data.data);
+}
+
+const displayPhoneDetails = phone =>{
+console.log(phone);
+const phoneTitle = document.getElementById("phoneDetailsModalLabel");
+phoneTitle.innerText = phone.name;
+const phoneDetails = document.getElementById("detailsPhone");
+phoneDetails.innerHTML = `
+<p>Brand: ${phone.brand}</p>
+<p>Release Date: ${phone.releaseDate?phone.releaseDate:"no release date found"}</p>
+<p> ${phone.mainFeatures? phone.mainFeatures.storage : "no storage found" }</p>
+<p> ${phone.mainFeatures? phone.mainFeatures.displaySize : "no display size found" }</p>
+<p> ${phone.others? phone.others.Bluetooth : "no bluetooth found" }</p>
+
+`;
 }
